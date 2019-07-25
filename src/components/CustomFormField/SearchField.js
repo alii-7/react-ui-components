@@ -22,6 +22,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(
     createStyles({
         root: {
+            width: '300px',
             fontFamily: 'Montserrat',
             fontSize: '15px',
             fontWeight: '600',
@@ -74,6 +75,7 @@ const SearchField = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <Input
+            classname={classes.root}
                 disableUnderline
                 className={classes.root}
                 classes={{ input: classes.input, disabled: classes.disabled, focused: classes.focused }}

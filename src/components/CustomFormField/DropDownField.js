@@ -2,11 +2,15 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles, createStyles } from '@material-ui/styles';
 import CancelImage from '../../generic/images/cancel-circle.png';
+import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select'
 
 const useStyles = makeStyles(
     createStyles({
-        root: {
+        select: {
+            textAlign: 'left',
+            width: '300px',
             fontFamily: 'Montserrat',
             fontSize: '15px',
             fontWeight: '600',
@@ -17,9 +21,12 @@ const useStyles = makeStyles(
             paddingLeft: '8px',
             borderRadius: '5px',
             border: '2px solid rgb(234,232,231)',
-            backgroundColor: 'rgb(255,255,255)',
-            color: '#adaba5',
+            backgroundColor: 'rgb(255,255,255,1)',
+            color: '#545454',
             disableUnderline: true,
+            '&:focus': {
+                backgroundColor: 'rgb(255,255,255,1)',
+            }
         },
         'disabled': {
             border: '2px solid  #f7f7f7',
@@ -27,9 +34,12 @@ const useStyles = makeStyles(
         },
         'focused': {
             border: '2px solid  #1b6af9',
+            background: 'rgb(255,255,255,1)',
+            backgroundColor: 'rgb(255,255,255,1)',
             color: '#545454',
         },
         input: {
+            backgroundColor: 'rgb(255,255,255,1)',
             fonFamily: 'Montserrat',
             fontSize: '15px',
             fontWeight: 'normal',
@@ -38,56 +48,32 @@ const useStyles = makeStyles(
             lineHeight: '1.33',
             letterSpacing: 'normal',
             border: 'none',
-            color: '#545454',
-            '&::-webkit-search-cancel-button': {
-                position: 'relative',
-                top: '3px',
-                WebkitAppearance: 'none',
-                height: '25px',
-                width: '25px',
-                backgroundImage: `url(${CancelImage})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '20px,20px'
-            }
         },
-        textField: {
-            border: '2px solid rgb(234,232,231)',
-            backgroundColor: 'rgb(255,255,255)',
-            // marginLeft: theme.spacing(1),
-            // marginRight: theme.spacing(1),
-            width: 200,
-        },
-        dense: {
-            marginTop: 19,
-        },
-        menu: {
-            width: 200,
-        },
+        disabledOnlyItem: {}
     })
 )
 
 const DropDownField = (props) => {
-    console.log("propss", props)
     const classes = useStyles()
+    console.log(props.disabled)
+    console.log(props.children.length)
+
+    const isOnlyItem = props.children.length === 1 ? classes.disabledOnlyItem : classes.disabled
+    console.log("sadas", isOnlyItem)
+    // console.log("ddd",props.children[0].props.children)
     return (
-        <TextField
-            className={classes.textField}
-            InputProps={{
-                // classes: { input: input },
-                disableUnderline: true
-            }}
-            select
-            SelectProps={{
-                MenuProps: {
-                    className: classes.menu,
-                },
-            }}
-            margin="normal"
+        <Select
+            displayEmpty={false} renderValue={(value) => { return `${value}` }}
+            disabled={props.disabled || (props.children.length === 1)}
+            classes={{ select: classes.select }}
+            className={classes.select}
+            input={<Input classes={{ focused: classes.focused, disabled: isOnlyItem, input: classes.input }} />}
+            disableUnderline={true}
+            displayEmpty={true}
             {...props}
         >
-            <MenuItem value='ads'> some text </MenuItem>
-            {/* <MenuItem /> goes heree */}
-        </TextField>
+        </Select>
+
     )
 }
 
